@@ -13,7 +13,7 @@ export default function App() {
   const [waveCount, setWaveCount] = useState("?");
   const [allWaves, setAllWaves] = useState([]);
   // address of my WavePortal deployed on Rinkeby
-  const contractAddress = "0xFA24E22Da222dF4a02B56c27B3D4B736872F126A";
+  const contractAddress = "0xB4bc34F136dC2cE99bd48Ef0d54132D26e218fB4";
 
   const checkIfWeb3Connected = async () => {
     try {
@@ -73,13 +73,18 @@ export default function App() {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI.abi, signer);
+        wavePortalContract.on("PrizeMoneySent", (receiver, amount) => {
+          console.log("%s received money", receiver, amount);
+        });
+
         /*
         * Execute the actual wave from your smart contract
         */
-        const waveTxn = await wavePortalContract.wave(messageInput);
+        const waveTxn = await wavePortalContract.wave(messageInput, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
         await waveTxn.wait();
         console.log("Mined -- ", waveTxn.hash);
+
 
         let count = (await wavePortalContract.totalWaveCount()).toNumber();
         setWaveCount(count);
@@ -121,9 +126,7 @@ export default function App() {
         const signer = provider.getSigner();
         const wavePortalContract = new ethers.Contract(contractAddress, contractABI.abi, signer);
 
-        console.log("i am here");
         const waves = await wavePortalContract.getAllWaves();
-        console.log("i am heeere", waves);
 
         /*
          * We only need address, timestamp, and message in our UI so let's
@@ -139,6 +142,18 @@ export default function App() {
         });
 
         setAllWaves(wavesCleaned);
+
+
+        wavePortalContract.on("NewWave", (from, message, timestamp) => {
+          console.log("NewWave", from, timestamp, message);
+
+          setAllWaves(prevState => [...prevState, {
+            address: from,
+            timestamp: new Date(timestamp * 1000),
+            message: message
+          }]);
+        });
+
       } else {
         console.log("Ethereum object doesn't exist!")
       }
@@ -167,13 +182,6 @@ export default function App() {
           {waveCount} folks have waved at me! Connect your Ethereum wallet to join them:
         </div>
 
-        <div className="dataContainer">
-          <input type="text" value={messageInput} onChange={((event) => setMessageInput(event.target.value))} />
-          <button className="waveButton" onClick={wave}>
-            Wave at Me
-          </button>
-        </div>
-
         {/*
         * If there is no currentAccount render this button
         */}
@@ -182,6 +190,13 @@ export default function App() {
             Connect Wallet
           </button>
         )}
+
+        <div className="dataContainer">
+          <input type="text" value={messageInput} onChange={((event) => setMessageInput(event.target.value))} />
+          <button className="waveButton" onClick={wave}>
+            Wave at Me
+          </button>
+        </div>
 
 
         {allWaves.map((wave, index) => {
