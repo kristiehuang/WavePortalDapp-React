@@ -1,3 +1,11 @@
+hello!
+
+see smart contract code @ https://github.com/kristiehuang/WavePortalDapp-Solidity
+
+this is just the react frontend for my lil guestbook, hosted by repl
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Running on Repl.it
