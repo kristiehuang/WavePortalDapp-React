@@ -179,7 +179,7 @@ export default function App() {
         </div>
 
         <div className="bio">
-          {waveCount} folks have waved at me! Connect your Ethereum wallet to join them:
+          {waveCount} folks have waved at me! Connect your Ethereum wallet [on Rinkeby] to join them:
         </div>
 
         {/*
