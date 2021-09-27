@@ -227,6 +227,10 @@ export default function App() {
               <div style={{marginTop: "8px"}}>"{wave.message}"</div>
             </div>)
         })}
+
+        <div className="bio">
+          Deployed on Rinkeby at {contractAddress}.
+        </div>
       </div>
     </div>
   );
