@@ -88,6 +88,7 @@ export default function App() {
 
         let count = (await wavePortalContract.totalWaveCount()).toNumber();
         setWaveCount(count);
+        setMessageInput("");
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -174,11 +175,11 @@ export default function App() {
         </div>
 
         <div className="bio">
-          I’m a crypto geek, lifelong student (currently at UC Berkeley), and human being.
+          I’m a crypto geek, lifelong student (currently at UC Berkeley), and human being. Welcome to my Ethereum-powered web3 guestbook.
         </div>
 
         <div className="bio">
-          {waveCount} folks have waved at me! Connect your Ethereum wallet [on Rinkeby] to join them:
+          I have been left {waveCount} notes! Connect your Ethereum wallet [on Rinkeby only for now] to up that number:
         </div>
 
         {/*
@@ -193,7 +194,7 @@ export default function App() {
         <div className="dataContainer">
           <input type="text" value={messageInput} onChange={((event) => setMessageInput(event.target.value))} />
           <button className="waveButton" onClick={wave}>
-            Wave at Me
+            Leave This Note
           </button>
         </div>
 
