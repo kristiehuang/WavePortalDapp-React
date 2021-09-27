@@ -2,7 +2,11 @@ hello!
 
 see smart contract code @ https://github.com/kristiehuang/WavePortalDapp-Solidity
 
-this is just the react frontend for my lil guestbook, hosted by repl
+this is just the react frontend for my lil guestbook, hosted by repl:
+
+https://user-images.githubusercontent.com/27475332/134865492-38bf0036-c057-4692-803f-9315191232dc.mov
+
+
 
 ---
 
